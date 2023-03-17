@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 //los enhancers para la funcionalidad del store
 const composedEnhancers = compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(logger/* , featuring */)
+  applyMiddleware(logger, featuring)
 );
 
 //creamos el store con el reducer
