@@ -7,7 +7,7 @@ import {SearchPokemon} from './components/SearchPokemon/SearchPokemon';
 import {PokemonList} from './components/PokemonList/PokemonList';
 import logo from './static/logo.svg'
 
-import { getPokemon } from './api';
+import { getPokemon, getPokemonDetails } from './api';
 /* import { setPokemons as setPokemonsActions} from './actions'; */
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,15 @@ function App() {
     const fetchPokemons = async () => {
       //cuando tengamos la respuesta la guardaremos
       const pokemonResp = await getPokemon();
-      dispatch(setPokemons(pokemonResp));
+
+      //funcion para obtener el detalle de cada pokemon
+      const pokemonsDetailed = await Promise.all(pokemonResp.map((pokemon) => 
+        getPokemonDetails(pokemon)
+      ));
+
+      console.log(pokemonsDetailed);
+      dispatch(setPokemons(pokemonsDetailed));
+      /* dispatch(setPokemons(pokemonResp)); */
     };
 
     fetchPokemons();

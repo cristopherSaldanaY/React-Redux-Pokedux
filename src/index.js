@@ -8,7 +8,7 @@ import {
   compose,
   legacy_createStore as createStore,
 } from "redux";
-import { featuring, logger } from "./middlewares";
+import { /* featuring */ logger } from "./middlewares";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -16,7 +16,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 //los enhancers para la funcionalidad del store
 const composedEnhancers = compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(logger, featuring)
+  /* applyMiddleware(logger, featuring) */
+  applyMiddleware(logger)
 );
 
 //creamos el store con el reducer
