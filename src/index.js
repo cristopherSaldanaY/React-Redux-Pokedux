@@ -8,17 +8,16 @@ import {
   compose,
   legacy_createStore as createStore,
 } from "redux";
+import thunk from "redux-thunk";
 import { /* featuring */ logger } from "./middlewares";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-//los enhancers para la funcionalidad del store
-const composedEnhancers = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  /* applyMiddleware(logger, featuring) */
-  applyMiddleware(logger)
-);
+const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+//los enhancers para la funcionalidad del store, integramos redux thunk
+const composedEnhancers = composeAlt(applyMiddleware(thunk,logger));
 
 //creamos el store con el reducer
 const store = createStore(pokemonReducer, composedEnhancers);
