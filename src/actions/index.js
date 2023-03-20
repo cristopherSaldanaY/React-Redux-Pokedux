@@ -1,10 +1,10 @@
 import { getPokemonDetails } from "../api";
-import { SET_POKEMONS } from "./types";
+import { SET_LOADING, SET_POKEMONS, SET_FAVORITE } from "./types";
 
-export const setPokemons = (payload) => ({
-  type: SET_POKEMONS,
-  payload,
-});
+//action creator
+export const setPokemons = (payload) => ({ type: SET_POKEMONS, payload });
+export const setLoading = (payload) => ({ type: SET_LOADING, payload });
+export const setFavorite = (payload) => ({ type: SET_FAVORITE, payload });
 
 //funcion para obtener el detalle de pokemon usando asincronismo con redux-thunk
 export const getPokemonWithDetails =

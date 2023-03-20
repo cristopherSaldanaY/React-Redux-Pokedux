@@ -1,34 +1,36 @@
 /* import { useEffect, useState } from "react"; */
 import { useEffect } from "react";
-import { Col } from "antd";
+import { Col, Spin } from "antd";
 /* import { connect } from "react-redux"; */
 
-import {SearchPokemon} from './components/SearchPokemon/SearchPokemon';
-import {PokemonList} from './components/PokemonList/PokemonList';
-import logo from './static/logo.svg'
+import { SearchPokemon } from "./components/SearchPokemon/SearchPokemon";
+import { PokemonList } from "./components/PokemonList/PokemonList";
+import logo from "./static/logo.svg";
 
-import { getPokemon } from './api';
+import { getPokemon } from "./api";
 /* import { setPokemons as setPokemonsActions} from './actions'; */
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonWithDetails } from "./actions";
-
+import { getPokemonWithDetails, setLoading } from "./actions";
 
 function App() {
-
   /* USANDO HOOKS API */
-  const pokemons = useSelector(state => state.pokemons);
+  const pokemons = useSelector((state) => state.pokemons);
+  const loading  = useSelector((state) => state.loading);
   const dispatch = useDispatch();
 
   //hook para el uso de la api
-  useEffect( () => {
+  useEffect(() => {
     const fetchPokemons = async () => {
+      //cargando antes de la respuesta
+      dispatch(setLoading(true));
+
       //cuando tengamos la respuesta la guardaremos
       const pokemonResp = await getPokemon();
 
       //usar el action creator para obtener los pokemons con detalle
       dispatch(getPokemonWithDetails(pokemonResp));
-
+      dispatch(setLoading(false));
     };
 
     fetchPokemons();
@@ -38,12 +40,21 @@ function App() {
   return (
     <div className="App">
       <Col span={4} offset={10}>
-        <img src={logo} alt='pokedux' />
+        <img src={logo} alt="pokedux" />
       </Col>
       <Col span={8} offset={8}>
         <SearchPokemon />
       </Col>
-      <PokemonList pokemons={pokemons} />
+      {loading ? (
+        <Col offset={12} >
+          <div className="loading">
+            <Spin spinning size="large" />
+          </div>
+          
+        </Col>
+      ) : (
+        <PokemonList pokemons={pokemons} />
+      )}
     </div>
   );
 }

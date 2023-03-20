@@ -14,6 +14,7 @@ import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+//compose alternativo para ejecutar devtools o el compose 
 const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 //los enhancers para la funcionalidad del store, integramos redux thunk
